@@ -2,7 +2,6 @@ package com.github.lucasdc.service;
 
 import com.github.lucasdc.client.GovAPIClient;
 import com.github.lucasdc.dto.expenses.ExpensesByOrganDTO;
-import com.github.lucasdc.dto.expenses.ExpensesByOrganRequestDTO;
 import com.github.lucasdc.dto.expenses.ExpensesByOrganResponseDTO;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,11 @@ public class ExpensesService {
         this.client = client;
     }
 
-    public List<ExpensesByOrganResponseDTO> getExpensesByOrgan(ExpensesByOrganRequestDTO requestDTO) {
-        Map<String, String> params = Map.of(
-                "ano", requestDTO.getYear(),
-                "orgao", requestDTO.getOrgan(),
-                "pagina", String.valueOf(requestDTO.getPage())
+    public List<ExpensesByOrganResponseDTO> getExpensesByOrganAndYear(String organName, Long year, Long page) {
+        Map<String, Object> params = Map.of(
+                "orgao", organName,
+                "ano", year,
+                "pagina", page
         );
 
         List<ExpensesByOrganDTO> expensesByOrgan = client.get("/despesas/por-orgao", params, ExpensesByOrganDTO.class);

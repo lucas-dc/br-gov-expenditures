@@ -1,13 +1,9 @@
 package com.github.lucasdc.controller;
 
-import com.github.lucasdc.dto.expenses.ExpensesByOrganRequestDTO;
 import com.github.lucasdc.dto.expenses.ExpensesByOrganResponseDTO;
 import com.github.lucasdc.service.ExpensesService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,10 +17,12 @@ public class ExpensesController {
         this.service = service;
     }
 
-    @GetMapping("/organ")
-    public ResponseEntity<List<ExpensesByOrganResponseDTO>> listAllExpensesByOrgan(
-            @ModelAttribute ExpensesByOrganRequestDTO requestDTO) {
-        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrgan(requestDTO);
+    @GetMapping("/organ/{name}/{year}")
+    public ResponseEntity<List<ExpensesByOrganResponseDTO>> listAllExpensesByOrganAndYear(
+            @PathVariable("name") String organName,
+            @PathVariable("year") Long year,
+            @RequestParam("page") Long page) {
+        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrganAndYear(organName, year, page);
         return ResponseEntity.ok(result);
     }
 }

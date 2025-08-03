@@ -3,6 +3,7 @@ package com.github.lucasdc.client;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lucasdc.config.GovAPIProperties;
+import com.github.lucasdc.util.URIBuilder;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -25,7 +26,7 @@ public class GovAPIClient {
         this.props = props;
     }
 
-    public <T> List<T> get(String endpoint, Map<String, String> params, Class<T> reponseType) {
+    public <T> List<T> get(String endpoint, Map<String, Object> params, Class<T> responseType) {
         String uri = URIBuilder.buildUri(props.getBaseURL(), endpoint, params);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -36,7 +37,7 @@ public class GovAPIClient {
 
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, reponseType);
+            JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, responseType);
             return mapper.readValue(response.body(), type);
         } catch (Exception e) {
             throw new RuntimeException("Failed to call Gov API", e);
