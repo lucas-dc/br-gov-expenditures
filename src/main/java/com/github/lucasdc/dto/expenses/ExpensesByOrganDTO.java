@@ -16,6 +16,11 @@ public class ExpensesByOrganDTO {
     @JsonDeserialize(using = LocalizedBigDecimalDeserializer.class)
     private BigDecimal paidValue;
 
+    public ExpensesByOrganDTO(String organName, BigDecimal paidValue) {
+        this.organ = organName;
+        this.paidValue = paidValue;
+    }
+
     public String getOrgan() {
         return organ;
     }
