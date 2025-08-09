@@ -21,8 +21,8 @@ public class SIAFICodesImporterService {
         this.organRepository = organRepository;
     }
 
-    public void importFromResourceFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:siafi_codes.txt");
+    public void importFromResourceFile(String location) throws Exception {
+        Resource resource = resourceLoader.getResource(location);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line;

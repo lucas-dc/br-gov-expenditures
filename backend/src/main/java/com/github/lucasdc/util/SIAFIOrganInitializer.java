@@ -15,7 +15,7 @@ public class SIAFIOrganInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        importerService.importFromResourceFile();
+        importerService.importFromResourceFile("classpath:siafi_codes.txt");
     }
 
 }
