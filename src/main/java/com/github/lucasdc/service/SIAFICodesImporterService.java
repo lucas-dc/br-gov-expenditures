@@ -27,10 +27,10 @@ public class SIAFICodesImporterService {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] lineSplittedByComma = line.split("\"");
-                String code = lineSplittedByComma[0].substring(0, lineSplittedByComma[0].length()-1);
-                String organName = lineSplittedByComma[1];
-                Branch branch = Branch.fromValue(lineSplittedByComma[7].split(" ")[1]); // ignore the prefix "PODER "
+                String[] lineSplittedByQuotationMarks = line.split("\"");
+                String code = lineSplittedByQuotationMarks[0].substring(0, lineSplittedByQuotationMarks[0].length()-1);
+                String organName = lineSplittedByQuotationMarks[1];
+                Branch branch = Branch.fromValue(lineSplittedByQuotationMarks[7].split(" ")[1]); // ignore the prefix "PODER "
 
                 this.organRepository.save(new Organ(code, organName, branch));
             }
