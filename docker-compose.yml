@@ -5,11 +5,6 @@ services:
     image: mysql:8.0
     container_name: mysql-container
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 12345
-      MYSQL_DATABASE: brgovexpenses
-      MYSQL_USER: mysqluser
-      MYSQL_PASSWORD: 12345
     ports:
       - "3306:3306"
     volumes:
@@ -49,4 +44,5 @@ volumes:
 
 networks:
   app-network:
+    name: app-network
     driver: bridge
