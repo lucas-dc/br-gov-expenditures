@@ -24,7 +24,7 @@ const ExpensesPieChart = () => {
         const data = response.data;
 
         const labels = data.map(item => item.organ);
-        const amounts = data.map(item => item.amount);
+        const paid = data.map(item => item.paid);
 
         const backgroundColors = [
           '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
@@ -36,7 +36,7 @@ const ExpensesPieChart = () => {
           datasets: [
             {
               label: 'Expenses by Organ',
-              data: amounts,
+              data: paid,
               backgroundColor: backgroundColors,
               borderWidth: 1,
             }
