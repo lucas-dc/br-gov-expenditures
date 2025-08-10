@@ -40,6 +40,7 @@ public class GovAPIClient {
             JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, responseType);
             return mapper.readValue(response.body(), type);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Failed to call Gov API", e);
         }
     }

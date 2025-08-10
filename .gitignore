@@ -1,5 +1,8 @@
 target/
 frontend/node_modules/
+frontend/docker
+backend/backend.env
+backend/dependency-reduced-pom.xml
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
