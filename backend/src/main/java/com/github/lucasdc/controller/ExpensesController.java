@@ -17,6 +17,14 @@ public class ExpensesController {
         this.service = service;
     }
 
+    @GetMapping("/{year}")
+    public ResponseEntity<List<ExpensesByOrganResponseDTO>> listAllExpensesByYear(
+            @PathVariable("year") Long year,
+            @RequestParam("page") Long page) {
+        List<ExpensesByOrganResponseDTO> result = service.getExpensesByYear(year, page);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/organ/{name}/{year}")
     public ResponseEntity<List<ExpensesByOrganResponseDTO>> listAllExpensesByOrganAndYear(
             @PathVariable("name") String organName,
