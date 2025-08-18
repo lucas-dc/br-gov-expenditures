@@ -25,12 +25,12 @@ public class ExpensesController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/organ/{name}/{year}")
+    @GetMapping("/organ/{code}/{year}")
     public ResponseEntity<List<ExpensesByOrganResponseDTO>> listAllExpensesByOrganAndYear(
-            @PathVariable("name") String organName,
+            @PathVariable("code") String code,
             @PathVariable("year") Long year,
             @RequestParam("page") Long page) {
-        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrganAndYear(organName, year, page);
+        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrganCodeAndYear(code, year, page);
         return ResponseEntity.ok(result);
     }
 }

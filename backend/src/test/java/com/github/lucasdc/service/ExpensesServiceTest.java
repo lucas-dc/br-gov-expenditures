@@ -3,7 +3,6 @@ package com.github.lucasdc.service;
 import com.github.lucasdc.client.GovAPIClient;
 import com.github.lucasdc.dto.expenses.ExpensesByOrganDTO;
 import com.github.lucasdc.dto.expenses.ExpensesByOrganResponseDTO;
-import com.github.lucasdc.service.ExpensesService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,7 +38,7 @@ public class ExpensesServiceTest {
         when(client.get(any(), any(), eq(ExpensesByOrganDTO.class)))
                 .thenReturn(mockResponse);
 
-        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrganAndYear(organName, year, page);
+        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrganCodeAndYear(organName, year, page);
 
         assertNotNull(result);
         assertEquals(1, result.size());
