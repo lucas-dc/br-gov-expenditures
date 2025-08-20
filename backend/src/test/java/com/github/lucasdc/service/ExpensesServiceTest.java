@@ -42,7 +42,7 @@ public class ExpensesServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Lorem Ipsum", result.get(0).getOrgan());
+        assertEquals("Lorem Ipsum", result.get(0).getOrganName());
         assertEquals(BigDecimal.valueOf(1234.56), result.get(0).getPaid());
     }
 }
