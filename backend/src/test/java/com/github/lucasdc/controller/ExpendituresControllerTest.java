@@ -1,6 +1,6 @@
 package com.github.lucasdc.controller;
 
-import com.github.lucasdc.dto.expenditures.ExpendituresByOrganResponseDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresResponseDTO;
 import com.github.lucasdc.service.ExpendituresService;
 import com.github.lucasdc.util.SIAFIOrganInitializer;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +47,7 @@ public class ExpendituresControllerTest {
 
     @Test
     void shouldReturnExpendituresByYear() throws Exception {
-        ExpendituresByOrganResponseDTO mockResponse = new ExpendituresByOrganResponseDTO();
+        ExpendituresResponseDTO mockResponse = new ExpendituresResponseDTO();
         mockResponse.setOrganCode("63000");
         mockResponse.setPaid(BigDecimal.valueOf(1234.56));
 
@@ -62,7 +62,7 @@ public class ExpendituresControllerTest {
 
     @Test
     void shouldReturnExpendituresByOrganAndYear() throws Exception {
-        ExpendituresByOrganResponseDTO mockResponse = new ExpendituresByOrganResponseDTO();
+        ExpendituresResponseDTO mockResponse = new ExpendituresResponseDTO();
         mockResponse.setOrganCode("63000");
         mockResponse.setPaid(BigDecimal.valueOf(1234.56));
 

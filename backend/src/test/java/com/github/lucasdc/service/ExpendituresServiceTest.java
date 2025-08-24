@@ -2,7 +2,7 @@ package com.github.lucasdc.service;
 
 import com.github.lucasdc.client.GovAPIClient;
 import com.github.lucasdc.dto.expenditures.ExpendituresByOrganDTO;
-import com.github.lucasdc.dto.expenditures.ExpendituresByOrganResponseDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresResponseDTO;
 import com.github.lucasdc.entity.Branch;
 import com.github.lucasdc.entity.Organ;
 import com.github.lucasdc.repository.OrganRepository;
@@ -55,7 +55,7 @@ public class ExpendituresServiceTest {
 
         when(organRepository.findByCode(organCode)).thenReturn(Optional.of(new Organ(organCode, "Lorem Ipsum", Branch.EXECUTIVE)));
 
-        List<ExpendituresByOrganResponseDTO> result = service.getExpendituresByOrganCodeAndYear(organCode, year, page);
+        List<ExpendituresResponseDTO> result = service.getExpendituresByOrganCodeAndYear(organCode, year, page);
 
         assertNotNull(result);
         assertEquals(1, result.size());

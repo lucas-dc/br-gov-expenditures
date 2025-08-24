@@ -5,16 +5,16 @@ import com.github.lucasdc.entity.Branch;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ExpendituresByOrganResponseDTO implements Serializable {
+public class ExpendituresResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String organCode;
     private String organName;
     private BigDecimal  paid;
     private Branch branch;
 
-    public ExpendituresByOrganResponseDTO() {}
+    public ExpendituresResponseDTO() {}
 
-    public ExpendituresByOrganResponseDTO(String organCode, String organName, BigDecimal paid, Branch branch) {
+    public ExpendituresResponseDTO(String organCode, String organName, BigDecimal paid, Branch branch) {
         this.organCode = organCode;
         this.organName = organName;
         this.paid = paid;

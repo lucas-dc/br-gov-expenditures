@@ -3,7 +3,7 @@ package com.github.lucasdc.service;
 import com.github.lucasdc.cache.LettuceCache;
 import com.github.lucasdc.client.GovAPIClient;
 import com.github.lucasdc.dto.expenditures.ExpendituresByOrganDTO;
-import com.github.lucasdc.dto.expenditures.ExpendituresByOrganResponseDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresResponseDTO;
 import com.github.lucasdc.entity.Organ;
 import com.github.lucasdc.repository.OrganRepository;
 import org.springframework.cache.CacheManager;
@@ -29,13 +29,13 @@ public class ExpendituresService {
         this.cacheManager = cacheManager;
     }
 
-    public List<ExpendituresByOrganResponseDTO> getExpendituresByYear(Long year, Long page) {
-        List<ExpendituresByOrganResponseDTO> expendituresByYear = new ArrayList<>();
+    public List<ExpendituresResponseDTO> getExpendituresByYear(Long year, Long page) {
+        List<ExpendituresResponseDTO> expendituresByYear = new ArrayList<>();
         List<Organ> organs = organRepository.findAll();
         boolean shouldPreventAPIBlock = organs.size() > REQUESTS_PER_MINUTE_LIMIT;
 
         for(Organ organ : organs) {
-            List<ExpendituresByOrganResponseDTO> expense = this.getExpendituresByOrganCodeAndYear(organ.getCode(), year, page, shouldPreventAPIBlock);
+            List<ExpendituresResponseDTO> expense = this.getExpendituresByOrganCodeAndYear(organ.getCode(), year, page, shouldPreventAPIBlock);
 
             if(expense != null && !expense.isEmpty()) {
                 expense.get(0).setBranch(organ.getBranch());
@@ -46,16 +46,16 @@ public class ExpendituresService {
         return expendituresByYear;
     }
 
-    public List<ExpendituresByOrganResponseDTO> getExpendituresByOrganCodeAndYear(String organCode, Long year, Long page) {
+    public List<ExpendituresResponseDTO> getExpendituresByOrganCodeAndYear(String organCode, Long year, Long page) {
         return this.getExpendituresByOrganCodeAndYear(organCode, year, page, false);
     }
 
-    public List<ExpendituresByOrganResponseDTO> getExpendituresByOrganCodeAndYear(String organCode, Long year, Long page, boolean shouldPreventAPIBlock) {
+    public List<ExpendituresResponseDTO> getExpendituresByOrganCodeAndYear(String organCode, Long year, Long page, boolean shouldPreventAPIBlock) {
         LettuceCache cache = (LettuceCache) cacheManager.getCache(CACHE_NAME);
         String cacheKey = organCode + ":" + year;
 
         if(cache != null) {
-            List<ExpendituresByOrganResponseDTO> cachedValue = cache.get(cacheKey, List.class, ExpendituresByOrganResponseDTO.class);
+            List<ExpendituresResponseDTO> cachedValue = cache.get(cacheKey, List.class, ExpendituresResponseDTO.class);
 
             if (cachedValue != null) {
                 return cachedValue;
@@ -73,10 +73,10 @@ public class ExpendituresService {
         );
 
         List<ExpendituresByOrganDTO> expendituresByOrgan = client.get("/despesas/por-orgao", params, ExpendituresByOrganDTO.class);
-        List<ExpendituresByOrganResponseDTO> responseDTO = expendituresByOrgan.stream()
+        List<ExpendituresResponseDTO> responseDTO = expendituresByOrgan.stream()
                 .map(e -> {
                     Optional<Organ> organ = organRepository.findByCode(organCode);
-                    return new ExpendituresByOrganResponseDTO(organCode, e.getOrgan(), e.getPaidValue(), organ.get().getBranch());
+                    return new ExpendituresResponseDTO(organCode, e.getOrgan(), e.getPaidValue(), organ.get().getBranch());
                 })
                 .toList();
 
