@@ -4,8 +4,8 @@ This project interacts with the [Brazilian Government's Public API](https://api.
 
 This is a personal project to practice software architecture patterns, full-stack development, and is not intended for production or as a formal system, but a way to explore and practice various technologies.
 
-**1st version (08/21/2025)** :
-<img width="1471" height="799" alt="BR Gov Expenditures Dashboard" src="https://github.com/user-attachments/assets/5df5a1d8-7748-492e-95c3-63ee3cc45cc2" />
+**1st version (08/24/2025)** :
+<img width="1492" height="790" alt="BR Gov Expenditures Dashboard" src="https://github.com/user-attachments/assets/eb12d648-7ea4-4433-8db2-3b08aa288dcd" />
 
 **Features**
  - Developed in Spring Boot (Java) for the backend, and React.js for the frontend;
