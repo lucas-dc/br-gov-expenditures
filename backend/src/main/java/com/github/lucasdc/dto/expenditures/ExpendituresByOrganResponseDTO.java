@@ -1,20 +1,20 @@
-package com.github.lucasdc.dto.expenses;
+package com.github.lucasdc.dto.expenditures;
 
 import com.github.lucasdc.entity.Branch;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ExpensesByOrganResponseDTO implements Serializable {
+public class ExpendituresByOrganResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String organCode;
     private String organName;
     private BigDecimal  paid;
     private Branch branch;
 
-    public ExpensesByOrganResponseDTO() {}
+    public ExpendituresByOrganResponseDTO() {}
 
-    public ExpensesByOrganResponseDTO(String organCode, String organName, BigDecimal paid, Branch branch) {
+    public ExpendituresByOrganResponseDTO(String organCode, String organName, BigDecimal paid, Branch branch) {
         this.organCode = organCode;
         this.organName = organName;
         this.paid = paid;

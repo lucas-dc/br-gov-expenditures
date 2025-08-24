@@ -1,7 +1,8 @@
 package com.github.lucasdc.controller;
 
+import com.github.lucasdc.BRGovExpendituresApplication;
 import com.github.lucasdc.client.GovAPIClient;
-import com.github.lucasdc.dto.expenses.ExpensesByOrganDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresByOrganDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,10 +20,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = com.github.lucasdc.BRGovExpensesApplication.class,
+@SpringBootTest(classes = BRGovExpendituresApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class ExpensesControllerIT {
+public class ExpendituresControllerIT {
 
     private final String organCode = "63000";
     private final String year = "2025";
@@ -34,13 +35,13 @@ public class ExpensesControllerIT {
     private GovAPIClient client;
 
     @Test
-    void shouldReturnExpensesListByOrganAndYear() throws Exception {
-        List<ExpensesByOrganDTO> mockResponse = List.of(new ExpensesByOrganDTO("Lorem Ipsum", BigDecimal.valueOf(1234.56)));
+    void shouldReturnExpenditureListByOrganAndYear() throws Exception {
+        List<ExpendituresByOrganDTO> mockResponse = List.of(new ExpendituresByOrganDTO("Lorem Ipsum", BigDecimal.valueOf(1234.56)));
 
-        when(client.get(any(), any(), eq(ExpensesByOrganDTO.class)))
+        when(client.get(any(), any(), eq(ExpendituresByOrganDTO.class)))
                 .thenReturn(mockResponse);
 
-        mockMvc.perform(get("/api/expenses/organ/"+organCode+"/"+year)
+        mockMvc.perform(get("/api/expenditure/organ/"+organCode+"/"+year)
                         .param("page", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())

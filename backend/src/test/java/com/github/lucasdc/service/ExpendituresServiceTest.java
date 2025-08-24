@@ -1,8 +1,8 @@
 package com.github.lucasdc.service;
 
 import com.github.lucasdc.client.GovAPIClient;
-import com.github.lucasdc.dto.expenses.ExpensesByOrganDTO;
-import com.github.lucasdc.dto.expenses.ExpensesByOrganResponseDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresByOrganDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresByOrganResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,26 +19,26 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ExpensesServiceTest {
+public class ExpendituresServiceTest {
 
     @InjectMocks
-    private ExpensesService service;
+    private ExpendituresService service;
 
     @Mock
     private GovAPIClient client;
 
     @Test
-    void shouldReturnExpensesByOrganAndYear() {
+    void shouldReturnExpenditureByOrganAndYear() {
         String organName = "Lorem Ipsum";
         Long year = 2025L;
         Long page = 1L;
 
-        List<ExpensesByOrganDTO> mockResponse = List.of(new ExpensesByOrganDTO(organName, BigDecimal.valueOf(1234.56)));
+        List<ExpendituresByOrganDTO> mockResponse = List.of(new ExpendituresByOrganDTO(organName, BigDecimal.valueOf(1234.56)));
 
-        when(client.get(any(), any(), eq(ExpensesByOrganDTO.class)))
+        when(client.get(any(), any(), eq(ExpendituresByOrganDTO.class)))
                 .thenReturn(mockResponse);
 
-        List<ExpensesByOrganResponseDTO> result = service.getExpensesByOrganCodeAndYear(organName, year, page);
+        List<ExpendituresByOrganResponseDTO> result = service.getExpendituresByOrganCodeAndYear(organName, year, page);
 
         assertNotNull(result);
         assertEquals(1, result.size());

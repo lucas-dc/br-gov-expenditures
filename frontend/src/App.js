@@ -1,10 +1,10 @@
 import React from 'react';
-import ExpensesPieChart from './components/ExpensesPieChart';
+import ExpendituresPieChart from './components/ExpendituresPieChart';
 
 function App() {
   return (
     <div>
-      <ExpensesPieChart />
+      <ExpendituresPieChart />
     </div>
   );
 }

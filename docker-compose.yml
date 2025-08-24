@@ -1,9 +1,9 @@
-version: '3.8'
-
 services:
   mysql:
-    image: mysql:8.0
-    container_name: mysql-container
+    image: mysql:latest
+    container_name: mysql
+    env_file:
+      - ./backend/mysql.env
     restart: always
     ports:
       - "3306:3306"
@@ -20,11 +20,12 @@ services:
       - ./backend/backend.env
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/brgovexpenditures
     ports:
       - "8080:8080"
-      - "5005:5005"
     depends_on:
       - mysql
+      - redis
     networks:
       - app-network
 
@@ -36,6 +37,14 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
     networks:
       - app-network
 

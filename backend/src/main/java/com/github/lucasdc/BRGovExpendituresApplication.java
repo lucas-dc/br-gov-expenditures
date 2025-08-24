@@ -8,9 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableConfigurationProperties(GovAPIProperties.class)
-@EnableCaching
-public class BRGovExpensesApplication {
+public class BRGovExpendituresApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BRGovExpensesApplication.class, args);
+        SpringApplication.run(BRGovExpendituresApplication.class, args);
     }
 }

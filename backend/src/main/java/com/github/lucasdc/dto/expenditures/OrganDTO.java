@@ -1,4 +1,4 @@
-package com.github.lucasdc.dto.expenses;
+package com.github.lucasdc.dto.expenditures;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -2,8 +2,8 @@ package com.github.lucasdc.service;
 
 import com.github.lucasdc.cache.LettuceCache;
 import com.github.lucasdc.client.GovAPIClient;
-import com.github.lucasdc.dto.expenses.ExpensesByOrganDTO;
-import com.github.lucasdc.dto.expenses.ExpensesByOrganResponseDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresByOrganDTO;
+import com.github.lucasdc.dto.expenditures.ExpendituresByOrganResponseDTO;
 import com.github.lucasdc.entity.Organ;
 import com.github.lucasdc.repository.OrganRepository;
 import org.springframework.cache.CacheManager;
@@ -15,47 +15,47 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class ExpensesService {
+public class ExpendituresService {
     private final int REQUESTS_PER_MINUTE_LIMIT = 400;
-    private final String CACHE_NAME = "expensesCache";
+    private final String CACHE_NAME = "expendituresCache";
 
     private final GovAPIClient client;
     private final OrganRepository organRepository;
     private final CacheManager cacheManager;
 
-    public ExpensesService(GovAPIClient client, OrganRepository organRepository, CacheManager cacheManager) {
+    public ExpendituresService(GovAPIClient client, OrganRepository organRepository, CacheManager cacheManager) {
         this.client = client;
         this.organRepository = organRepository;
         this.cacheManager = cacheManager;
     }
 
-    public List<ExpensesByOrganResponseDTO> getExpensesByYear(Long year, Long page) {
-        List<ExpensesByOrganResponseDTO> expensesByYear = new ArrayList<>();
+    public List<ExpendituresByOrganResponseDTO> getExpendituresByYear(Long year, Long page) {
+        List<ExpendituresByOrganResponseDTO> expendituresByYear = new ArrayList<>();
         List<Organ> organs = organRepository.findAll();
         boolean shouldPreventAPIBlock = organs.size() > REQUESTS_PER_MINUTE_LIMIT;
 
         for(Organ organ : organs) {
-            List<ExpensesByOrganResponseDTO> expense = this.getExpensesByOrganCodeAndYear(organ.getCode(), year, page, shouldPreventAPIBlock);
+            List<ExpendituresByOrganResponseDTO> expense = this.getExpendituresByOrganCodeAndYear(organ.getCode(), year, page, shouldPreventAPIBlock);
 
             if(expense != null && !expense.isEmpty()) {
                 expense.get(0).setBranch(organ.getBranch());
-                expensesByYear.add(expense.get(0));
+                expendituresByYear.add(expense.get(0));
             }
         }
 
-        return expensesByYear;
+        return expendituresByYear;
     }
 
-    public List<ExpensesByOrganResponseDTO> getExpensesByOrganCodeAndYear(String organCode, Long year, Long page) {
-        return this.getExpensesByOrganCodeAndYear(organCode, year, page, false);
+    public List<ExpendituresByOrganResponseDTO> getExpendituresByOrganCodeAndYear(String organCode, Long year, Long page) {
+        return this.getExpendituresByOrganCodeAndYear(organCode, year, page, false);
     }
 
-    public List<ExpensesByOrganResponseDTO> getExpensesByOrganCodeAndYear(String organCode, Long year, Long page, boolean shouldPreventAPIBlock) {
+    public List<ExpendituresByOrganResponseDTO> getExpendituresByOrganCodeAndYear(String organCode, Long year, Long page, boolean shouldPreventAPIBlock) {
         LettuceCache cache = (LettuceCache) cacheManager.getCache(CACHE_NAME);
         String cacheKey = organCode + ":" + year;
 
         if(cache != null) {
-            List<ExpensesByOrganResponseDTO> cachedValue = cache.get(cacheKey, List.class, ExpensesByOrganResponseDTO.class);
+            List<ExpendituresByOrganResponseDTO> cachedValue = cache.get(cacheKey, List.class, ExpendituresByOrganResponseDTO.class);
 
             if (cachedValue != null) {
                 return cachedValue;
@@ -72,11 +72,11 @@ public class ExpensesService {
                 "pagina", page
         );
 
-        List<ExpensesByOrganDTO> expensesByOrgan = client.get("/despesas/por-orgao", params, ExpensesByOrganDTO.class);
-        List<ExpensesByOrganResponseDTO> responseDTO = expensesByOrgan.stream()
+        List<ExpendituresByOrganDTO> expendituresByOrgan = client.get("/despesas/por-orgao", params, ExpendituresByOrganDTO.class);
+        List<ExpendituresByOrganResponseDTO> responseDTO = expendituresByOrgan.stream()
                 .map(e -> {
                     Optional<Organ> organ = organRepository.findByCode(organCode);
-                    return new ExpensesByOrganResponseDTO(organCode, e.getOrgan(), e.getPaidValue(), organ.get().getBranch());
+                    return new ExpendituresByOrganResponseDTO(organCode, e.getOrgan(), e.getPaidValue(), organ.get().getBranch());
                 })
                 .toList();
 

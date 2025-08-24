@@ -1,4 +1,4 @@
-package com.github.lucasdc.dto.expenses;
+package com.github.lucasdc.dto.expenditures;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +8,7 @@ import com.github.lucasdc.util.LocalizedBigDecimalDeserializer;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExpensesByOrganDTO {
+public class ExpendituresByOrganDTO {
     @JsonProperty("orgao")
     private String organ;
 
@@ -16,10 +16,10 @@ public class ExpensesByOrganDTO {
     @JsonDeserialize(using = LocalizedBigDecimalDeserializer.class)
     private BigDecimal paidValue;
 
-    public ExpensesByOrganDTO() {
+    public ExpendituresByOrganDTO() {
     }
 
-    public ExpensesByOrganDTO(String organName, BigDecimal paidValue) {
+    public ExpendituresByOrganDTO(String organName, BigDecimal paidValue) {
         this.organ = organName;
         this.paidValue = paidValue;
     }
