@@ -80,7 +80,9 @@ public class ExpendituresService {
                 })
                 .toList();
 
-        cache.put(cacheKey, responseDTO);
+        if(cache != null) {
+            cache.put(cacheKey, responseDTO);
+        }
 
         return responseDTO;
     }
